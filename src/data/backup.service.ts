@@ -1,6 +1,5 @@
 import { db } from './local-database';
 
-// Estrutura do arquivo de backup. Versão incluída para permitir migrações futuras.
 interface BackupData {
   versao: number;
   exportadoEm: string;
@@ -40,13 +39,12 @@ export async function exportarBackup(): Promise<void> {
   URL.revokeObjectURL(url);
 }
 
-// Restaura o backup substituindo TODOS os dados atuais (usuário deve confirmar antes).
 export async function importarBackup(arquivo: File): Promise<void> {
   const texto = await arquivo.text();
   const data = JSON.parse(texto) as BackupData;
 
   if (!data || typeof data !== 'object' || !('versao' in data)) {
-    throw new Error('Arquivo de backup inválido.');
+    throw new Error('Arquivo de backup invalido.');
   }
 
   await db.transaction('rw', [db.entradas, db.saidas, db.produtos, db.fornecedores,
