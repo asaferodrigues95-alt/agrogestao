@@ -2,19 +2,19 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
 import path from 'node:path'
+import { fileURLToPath } from 'node:url'
 
-// Configuração do Vite: React + PWA instalável e com funcionamento 100% offline.
+const dirname = path.dirname(fileURLToPath(import.meta.url))
+
 export default defineConfig({
   resolve: {
-    // Espelha os paths do tsconfig.json — mantém a arquitetura em camadas
-    // explícita nos imports (ex: "@core/entities", "@data/repositories").
     alias: {
-      '@': path.resolve(__dirname, 'src'),
-      '@app': path.resolve(__dirname, 'src/app'),
-      '@core': path.resolve(__dirname, 'src/core'),
-      '@data': path.resolve(__dirname, 'src/data'),
-      '@features': path.resolve(__dirname, 'src/features'),
-      '@shared': path.resolve(__dirname, 'src/shared')
+      '@': path.resolve(dirname, 'src'),
+      '@app': path.resolve(dirname, 'src/app'),
+      '@core': path.resolve(dirname, 'src/core'),
+      '@data': path.resolve(dirname, 'src/data'),
+      '@features': path.resolve(dirname, 'src/features'),
+      '@shared': path.resolve(dirname, 'src/shared')
     }
   },
   plugins: [
@@ -39,8 +39,7 @@ export default defineConfig({
         ]
       },
       workbox: {
-        // Cache-first para todo o app: garante uso offline completo (sem depender de rede).
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        globPatterns: ['*/.{js,css,html,ico,png,svg,woff2}'],
         navigateFallback: '/index.html',
         runtimeCaching: [
           {
