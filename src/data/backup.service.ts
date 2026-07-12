@@ -33,7 +33,7 @@ export async function exportarBackup(): Promise<void> {
   const a = document.createElement('a');
   const dataStr = new Date().toISOString().slice(0, 10);
   a.href = url;
-  a.download = `backup-feira-forte-${dataStr}.json`;
+  a.download = backup-feira-forte-${dataStr}.json;
   document.body.appendChild(a);
   a.click();
   a.remove();
@@ -49,8 +49,8 @@ export async function importarBackup(arquivo: File): Promise<void> {
     throw new Error('Arquivo de backup inválido.');
   }
 
-  await db.transaction('rw', db.entradas, db.saidas, db.produtos, db.fornecedores,
-    db.movimentacoes, db.compras, db.vendas, db.settings, async () => {
+  await db.transaction('rw', [db.entradas, db.saidas, db.produtos, db.fornecedores,
+    db.movimentacoes, db.compras, db.vendas, db.settings], async () => {
       await Promise.all([
         db.entradas.clear(), db.saidas.clear(), db.produtos.clear(), db.fornecedores.clear(),
         db.movimentacoes.clear(), db.compras.clear(), db.vendas.clear(), db.settings.clear()
@@ -69,8 +69,8 @@ export async function importarBackup(arquivo: File): Promise<void> {
 }
 
 export async function limparTodosDados(): Promise<void> {
-  await db.transaction('rw', db.entradas, db.saidas, db.produtos, db.fornecedores,
-    db.movimentacoes, db.compras, db.vendas, async () => {
+  await db.transaction('rw', [db.entradas, db.saidas, db.produtos, db.fornecedores,
+    db.movimentacoes, db.compras, db.vendas], async () => {
       await Promise.all([
         db.entradas.clear(), db.saidas.clear(), db.produtos.clear(), db.fornecedores.clear(),
         db.movimentacoes.clear(), db.compras.clear(), db.vendas.clear()
