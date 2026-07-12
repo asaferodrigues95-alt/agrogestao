@@ -33,7 +33,7 @@ export async function exportarBackup(): Promise<void> {
   const a = document.createElement('a');
   const dataStr = new Date().toISOString().slice(0, 10);
   a.href = url;
-  a.download = backup-feira-forte-${dataStr}.json;
+  a.download = 'backup-feira-forte-' + dataStr + '.json';
   document.body.appendChild(a);
   a.click();
   a.remove();
