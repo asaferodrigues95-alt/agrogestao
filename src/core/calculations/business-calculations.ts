@@ -89,3 +89,9 @@ export function comparativoComprasVendas(compras: Compra[], vendas: Venda[]) {
     vendas: vendas.filter(v => v.data.slice(0, 7) === mes).reduce((a, v) => a + v.total, 0)
   }));
 }
+// Sugere o preço de venda a partir do custo e da margem de lucro desejada
+// (margem calculada sobre o preço de venda: margem% = (venda - custo) / venda).
+export function precoVendaSugerido(custo: number, margemDesejadaPercentual: number): number | null {
+  if (custo <= 0 || margemDesejadaPercentual <= 0 || margemDesejadaPercentual >= 100) return null;
+  return Number((custo / (1 - margemDesejadaPercentual / 100)).toFixed(2));
+}
