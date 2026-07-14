@@ -33,7 +33,7 @@ export async function exportarBackup(): Promise<void> {
   const dataStr = new Date().toISOString().slice(0, 10);
   a.href = url;
   a.download = 'backup-feira-forte-' + dataStr + '.json';
- import { db } from './local-database';)
+  document.body.appendChild(a);
   a.click();
   a.remove();
   URL.revokeObjectURL(url);
